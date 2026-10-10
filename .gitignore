@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+.env
+.venv/
+credentials.json
+token.json
+
+# Şəxsi faktlar - repoya düşməməlidir
+memory.json
+
+# VISION-un idarə etdiyi brauzerin profili (kuki, sessiya)
+.browser-profile/
+
+# Görüş cədvəlinin id-si - şəxsi sənədə işarədir
+sheet.json

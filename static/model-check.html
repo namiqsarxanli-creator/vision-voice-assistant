@@ -1,0 +1,11 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Local model check</title></head><body>
+<h1>Local MediaPipe model verification</h1><button id="run">Run blank-frame inference</button><pre id="result">Ready</pre><canvas id="frame" width="640" height="480"></canvas>
+<script src="vendor/hands/hands.js"></script><script>
+document.getElementById('run').onclick=async()=>{
+ const output=document.getElementById('result');let hands;
+ try{output.textContent='Loading local model...';const canvas=document.getElementById('frame');canvas.getContext('2d').fillRect(0,0,640,480);
+ hands=new Hands({locateFile:f=>new URL('vendor/hands/'+f,document.baseURI).href});hands.setOptions({maxNumHands:1,modelComplexity:1,minDetectionConfidence:.65,minTrackingConfidence:.6});
+ let seen=false;hands.onResults(r=>{seen=true;output.textContent='PASS: local model loaded; blank-frame inference completed; hands='+r.multiHandLandmarks.length;});
+ await hands.send({image:canvas});if(!seen)throw new Error('No results callback');
+ }catch(error){output.textContent='FAIL: '+error.message;}finally{if(hands)await hands.close();}
+};</script></body></html>

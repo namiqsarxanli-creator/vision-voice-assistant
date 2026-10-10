@@ -1,0 +1,266 @@
+:root {
+  color-scheme: dark;
+  --cyan: #00d4ff;
+  --gold: #ffaa22;
+}
+* {
+  box-sizing: border-box;
+}
+html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #01040a;
+  color: #49a8e7;
+  font-family: Consolas, 'Courier New', monospace;
+  user-select: none;
+}
+#scene, #dynamics {
+  position: fixed;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+#dynamics {
+  pointer-events: none;
+}
+#hud {
+  position: fixed;
+  top: 24px;
+  left: 24px;
+  font-size: 10px;
+  line-height: 1.8;
+  letter-spacing: 1px;
+  opacity: 0.85;
+  background: rgba(1, 10, 20, 0.40);
+  border: 1px solid rgba(0, 160, 255, 0.35);
+  border-radius: 4px;
+  padding: 6px 12px;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 0 12px rgba(0, 140, 255, 0.15);
+}
+.hudline {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.hudline i {
+  height: 5px;
+  width: 5px;
+  background: #ffaa33;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #ffaa33;
+}
+.hudline strong {
+  font-size: 12px;
+  font-weight: normal;
+  letter-spacing: 2px;
+  color: #7ad0ff;
+}
+#fps {
+  color: #4a7089;
+  font-size: 9px;
+  margin-left: 8px;
+}
+#tracking {
+  color: #5f9cba;
+  font-size: 9px;
+}
+.tiny {
+  font-size: 8px;
+  display: flex;
+  gap: 10px;
+  color: #3b7094;
+}
+.energy {
+  width: 68px;
+  height: 2px;
+  background: #10243d;
+  margin-top: 4px;
+  border-radius: 1px;
+  overflow: hidden;
+}
+.energy i {
+  height: 2px;
+  width: 15%;
+  display: block;
+  background: #00d4ff;
+  box-shadow: 0 0 6px #00d4ff;
+  transition: width 0.15s ease;
+}
+#brain {
+  position: fixed;
+  right: 32px;
+  top: 28px;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-shadow: 0 0 10px #00aaff;
+  color: #32b5ff;
+  text-align: right;
+  background: rgba(1, 10, 20, 0.35);
+  border: 1px solid rgba(0, 160, 255, 0.25);
+  border-radius: 4px;
+  padding: 6px 12px;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 0 12px rgba(0, 140, 255, 0.12);
+}
+#brain > span {
+  font-size: 5px;
+  color: #00e1ff;
+  margin-left: 3px;
+}
+#brain small {
+  display: block;
+  font-size: 8px;
+  letter-spacing: 1px;
+  color: #2a6994;
+  margin-top: 3px;
+}
+#interface {
+  position: fixed;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+  max-width: 95vw;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+/* Panel siçan tərpənəndə görünür (body.show-controls) və siçan onun üstündə
+   olduqca görünən qalır. Diqqət: yalnız :hover-ə bağlamaq olmaz - panel
+   pointer-events:none olduğu üçün hover heç vaxt işə düşmür və düymələr
+   əbədi əlçatmaz qalır. */
+body.show-controls:not(.clean) #interface,
+#interface:hover,
+#interface:focus-within {
+  opacity: 1;
+  pointer-events: auto;
+}
+#notice {
+  text-align: center;
+  font-size: 11px;
+  color: #72a8c5;
+  line-height: 1.5;
+  margin: 0 auto 10px;
+  max-width: 630px;
+  text-shadow: 0 1px 4px #000;
+}
+nav {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  padding: 7px;
+  background: rgba(1, 12, 22, 0.88);
+  border: 1px solid rgba(16, 52, 78, 0.75);
+  border-radius: 5px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
+}
+button {
+  border: 1px solid #1a405c;
+  background: rgba(4, 20, 34, 0.85);
+  color: #73afd4;
+  border-radius: 3px;
+  padding: 8px 12px;
+  font: 10px Consolas, monospace;
+  letter-spacing: 1px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+button:hover, button:focus-visible {
+  color: #e2f7ff;
+  border-color: #00a2ff;
+  outline: none;
+  background: #0d324c;
+  box-shadow: 0 0 8px rgba(0, 162, 255, 0.4);
+}
+button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+#start {
+  border-color: #1a6296;
+  color: #72d0ff;
+}
+kbd {
+  font: 6px Consolas;
+  color: #457394;
+  margin-left: 5px;
+  padding: 1px 3px;
+  background: rgba(20, 50, 75, 0.5);
+  border-radius: 2px;
+}
+#light[aria-pressed=true] {
+  color: #f0c371;
+  border-color: #8c682a;
+}
+#preview {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  width: 130px;
+  height: 98px;
+  border: 1px solid #1b4f70;
+  border-radius: 4px;
+  opacity: 0.65;
+  background: #010710;
+  overflow: hidden;
+}
+#preview video, #preview canvas {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+#preview video {
+  transform: scaleX(-1);
+  opacity: 0.6;
+}
+#preview span {
+  position: absolute;
+  bottom: 5px;
+  left: 6px;
+  font-size: 6px;
+  letter-spacing: 1px;
+  color: #4a8eb8;
+}
+body.clean #interface,
+body.clean #hud,
+body.clean #brain,
+body.clean #preview {
+  display: none !important;
+}
+@media (max-width: 760px) {
+  #interface {
+    width: 96vw;
+  }
+  nav {
+    flex-wrap: wrap;
+  }
+  button {
+    font-size: 7px;
+    padding: 8px;
+  }
+  #notice {
+    font-size: 8px;
+  }
+  #brain {
+    right: 12px;
+    top: 14px;
+    font-size: 6px;
+  }
+  #preview {
+    bottom: 95px;
+    width: 90px;
+    height: 68px;
+  }
+}
+
+/* Reference composition: the artwork stays clear while idle. */
+#hud { opacity: 0; transition: opacity .35s ease; }
+body.show-controls #hud, body.dormant #hud { opacity: .85; }
+#brain { right: auto; left: calc(50% + min(31vh, 30vw)); top: 23%; padding: 0; border: 0; background: none; box-shadow: none; backdrop-filter: none; font-size: 6px; letter-spacing: 1px; }
+#brain small, #brain > span { display: none; }
+@media (prefers-reduced-motion: reduce) { #interface, #hud { transition: none; } }

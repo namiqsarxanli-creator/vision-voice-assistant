@@ -1,0 +1,59 @@
+/* Təqdimat üçün: mətn uzaqdan oxunmalıdır, ona görə ölçülər böyüdülüb. */
+#transcript{position:fixed;left:50%;bottom:124px;transform:translateX(-50%);width:min(900px,92vw);text-align:center;pointer-events:none}
+#transcript p{margin:0 0 10px;line-height:1.55;letter-spacing:.3px;text-shadow:0 2px 12px #000}
+#transcript .user{color:#6ea3bd;font-size:13px;letter-spacing:1.2px;text-transform:uppercase}
+#transcript .reply{color:#e4f6ff;font-size:21px;font-weight:500;letter-spacing:.2px;
+  text-shadow:0 0 18px rgba(0,150,255,.5),0 2px 12px #000}
+@media (max-width:760px){#transcript .reply{font-size:16px}#transcript .user{font-size:11px}}
+#textForm{margin-top:8px;display:flex;justify-content:center}
+#textForm[hidden]{display:none}
+#textInput{width:min(520px,88vw);background:#04101bd9;border:1px solid #17405a;border-radius:3px;color:#cfeeff;
+  font:11px Consolas,monospace;padding:9px 12px;letter-spacing:.5px}
+#textInput:focus{outline:none;border-color:#258ac9}
+#talk[data-state=listening]{color:#8ff3b0;border-color:#2c7f50}
+#talk[data-state=thinking]{color:#e9b966;border-color:#6a4d22}
+#talk[data-state=speaking]{color:#6ac8ff;border-color:#175581}
+body.clean #transcript{display:none!important}
+#transcript .actions{margin-top:12px;font-size:11px;letter-spacing:2.5px;color:#58aed8;opacity:.9}
+#controls button[data-on="1"]{border-color:#ffae3a;color:#ffd79a}
+/* Kamera elementi yalnız MediaPipe üçün lazımdır - ekranda görünmür. */
+#camera{position:fixed;width:1px;height:1px;opacity:0;pointer-events:none;left:-10px;top:-10px}
+
+/* Yuxu rejimi: ekran TAM QARA. Nə model, nə panel, nə yazı - heç nə.
+   Model yalnız iki alqışdan sonra yaranır. */
+body.dormant #hud,
+body.dormant #brain,
+body.dormant #interface,
+body.dormant #transcript{display:none!important}
+
+
+
+/* ---- açılış ekranı --------------------------------------------------- */
+/* İlk klik həm tam ekran seçimini verir, həm də brauzerin mikrofon üçün
+   tələb etdiyi istifadəçi jestini təmin edir. */
+#startup{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(ellipse at center,rgba(2,14,26,.92),rgba(0,3,8,.985));
+  backdrop-filter:blur(3px);transition:opacity .45s ease}
+#startup.gone{opacity:0;pointer-events:none}
+.startup-card{text-align:center;padding:40px 52px;border:1px solid rgba(0,160,255,.28);border-radius:8px;
+  background:rgba(2,12,22,.6);box-shadow:0 0 60px rgba(0,120,255,.13),inset 0 0 40px rgba(0,80,160,.07);
+  animation:cardIn .6s cubic-bezier(.2,.8,.2,1)}
+@keyframes cardIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.startup-card h1{margin:0;font-size:46px;letter-spacing:15px;font-weight:400;color:#7fd8ff;
+  text-shadow:0 0 26px rgba(0,170,255,.65),0 0 60px rgba(0,120,255,.3)}
+.startup-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:34px}
+.startup-actions button{font:11px Consolas,monospace;letter-spacing:1.6px;padding:14px 26px;border-radius:4px}
+.startup-actions .primary{border-color:#1d76b8;color:#bfeaff;background:#0b2e49}
+.startup-actions .primary:hover{background:#12456c;border-color:#2ea6f0;box-shadow:0 0 18px rgba(0,162,255,.45)}
+@media (max-width:760px){.startup-card{padding:30px 24px}.startup-card h1{font-size:32px;letter-spacing:9px}}
+
+/* Cavab mətni modelin üstünə düşür. Arxasına yumşaq qaranlıq halqa qoyuruq:
+   hissəciklər görünən qalır, mətn isə uzaqdan da oxunur.
+   z-index #transcript-də yığılma konteksti yaradır, ona görə ::before mətnin
+   ALTINA, amma kanvasın ÜSTÜNƏ düşür. */
+#transcript{z-index:5}
+#transcript::before{content:'';position:absolute;inset:-28px -48px;z-index:-1;pointer-events:none;
+  background:radial-gradient(ellipse at center,
+    rgba(0,4,10,.88) 0%,rgba(0,4,10,.70) 48%,rgba(0,4,10,.32) 72%,transparent 88%)}
+#transcript:has(p[hidden]:nth-child(2))::before{opacity:0}
+#transcript .reply{text-shadow:0 0 20px rgba(0,150,255,.45),0 2px 4px #000,0 0 30px #000}

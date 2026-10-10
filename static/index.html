@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="az">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>VISION / səsli köməkçi</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="assistant.css"></head>
+<body>
+  <canvas id="scene" aria-label="Üzsüz mavi duman fiquru"></canvas>
+  <canvas id="dynamics" aria-hidden="true"></canvas>
+  <div id="hud"><div class="hudline"><i></i><strong>VISION</strong><span id="fps">— KADR/S</span></div><div id="tracking">HAZIR</div><div class="tiny"><span id="mode">01 / MAVİ</span><span id="source">YERLİ</span></div><div class="energy"><i id="energy"></i></div></div>
+  <span id="gesture" hidden aria-hidden="true"></span>
+
+  <!-- MediaPipe kadrları buradan oxuyur. Görüntü ekranda göstərilmir. -->
+  <video id="camera" autoplay playsinline muted aria-hidden="true"></video>
+
+  <div id="transcript" aria-live="polite">
+    <p id="userLine" class="user" hidden></p>
+    <p id="replyLine" class="reply" hidden></p>
+    <p id="actions" class="actions" hidden></p>
+  </div>
+
+  <!-- Açılış ekranı. Buradakı klik eyni zamanda brauzerin tələb etdiyi
+       istifadəçi jestidir: mikrofon icazəsi onsuz alına bilmir. -->
+  <div id="startup" role="dialog" aria-labelledby="startupTitle">
+    <div class="startup-card">
+      <h1 id="startupTitle">VISION</h1>
+      <div class="startup-actions">
+        <button id="startFull" class="primary">TAM EKRANDA BAŞLAT</button>
+        <button id="startWindow">PƏNCƏRƏDƏ DAVAM ET</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="interface">
+    <div id="notice" role="status" aria-live="polite"><b>ALQIŞLA OYAT</b> — iki əl çalmaqla danışa bilərsən · <b>ƏL İLƏ İDARƏ</b> — kamera ilə jest · <kbd>L</kbd> — işıq · <kbd>Esc</kbd> — modeli söndür</div>
+    <nav aria-label="Köməkçi idarələri">
+      <button id="talk">DANIŞ <kbd>V</kbd></button>
+      <button id="stopVoice">SUS</button>
+      <button id="micToggle" type="button" aria-pressed="true" title="Mikrofonu aç və ya söndür">🎙 MİKROFON: AÇIQ</button>
+      <button id="text">YAZ <kbd>T</kbd></button>
+      <button id="wake">ALQIŞLA OYAT</button>
+      <button id="handBtn">ƏL İLƏ İDARƏ</button>
+      <button id="geo">MƏKAN</button>
+      <button id="google" hidden>GOOGLE QOŞ</button>
+      <button id="theme">RƏNG <kbd>M</kbd></button>
+      <button id="fullscreen">TAM EKRAN <kbd>F</kbd></button>
+      <button id="hide">GİZLƏT <kbd>H</kbd></button>
+    </nav>
+    <form id="textForm" hidden><input id="textInput" type="text" autocomplete="off" placeholder="Sualını yaz və Enter"></form>
+  </div>
+
+  <script src="vendor/hands/hands.js"></script>
+  <script src="gestures.js?v=20261004-3"></script>
+  <script src="renderer.js"></script><script src="mist-renderer.js?v=1"></script><script src="clap.js"></script><script src="assistant.js?v=20261009-1"></script>
+</body>
+</html>
+
+
+
+
+
