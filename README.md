@@ -4,6 +4,8 @@
 
 🇦🇿 [Azərbaycan dilində](README.az.md)
 
+![VISION's particle body, assembled after a double clap](docs/screenshots/particle-body.jpg)
+
 Clap twice and a humanoid figure assembles itself from particles and starts listening. Ask in English
 or Azerbaijani. VISION answers out loud in a deep voice and can act on your behalf:
 
